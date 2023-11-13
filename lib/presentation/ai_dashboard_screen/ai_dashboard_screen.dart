@@ -71,18 +71,19 @@ class AiDashboardScreen extends StatelessWidget {
                           width: 221.h,
                           margin: EdgeInsets.only(left: 24.h),
                           child: Stack(alignment: Alignment.center, children: [
-                            Flexible(child: CustomOutlinedButton(
-                                  width:400.h,
-                                  text: "Get Suggestions",
-                                  onPressed: () {
-                                    onTapView(context);
-                                  },)
-                           
-                )])),
+                            Flexible(
+                                child: CustomOutlinedButton(
+                              width: 400.h,
+                              text: "Cadangan",
+                              onPressed: () {
+                                onTapView(context);
+                              },
+                            ))
+                          ])),
                       SizedBox(height: 31.v),
                       Padding(
                           padding: EdgeInsets.only(left: 35.h),
-                          child: Text("Progression",
+                          child: Text("Kemajuan",
                               style: theme.textTheme.headlineSmall)),
                       SizedBox(height: 21.v),
                       Padding(
@@ -96,7 +97,7 @@ class AiDashboardScreen extends StatelessWidget {
                                       imagePath: ImageConstant.imgLocation,
                                       height: 15.v,
                                       width: 25.h)),
-                              hintText: "Class Overalls",
+                              hintText: "Keseluhuran Kelas",
                               items: dropdownItemList1,
                               onChanged: (value) {})),
                       SizedBox(height: 31.v),
@@ -107,12 +108,12 @@ class AiDashboardScreen extends StatelessWidget {
                               horizontal: 15.h, vertical: 2.v),
                           decoration: AppDecoration.outlineBlack.copyWith(
                               borderRadius: BorderRadiusStyle.roundedBorder20),
-                          child: Text("Generate Graph",
+                          child: Text("Graf",
                               style: theme.textTheme.headlineSmall)),
                       SizedBox(height: 28.v),
                       CustomOutlinedButton(
                           width: 91.h,
-                          text: "Back",
+                          text: "Belekang",
                           margin: EdgeInsets.only(left: 26.h)),
                       SizedBox(height: 48.v),
                       CustomImageView(
