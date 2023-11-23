@@ -113,7 +113,7 @@ class AiDashboardScreen extends StatelessWidget {
                       SizedBox(height: 28.v),
                       CustomOutlinedButton(
                           width: 91.h,
-                          text: "Belekang",
+                          text: "Back",
                           margin: EdgeInsets.only(left: 26.h)),
                       SizedBox(height: 48.v),
                       CustomImageView(
