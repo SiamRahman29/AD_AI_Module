@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:turquoise/core/app_export.dart';
+import 'package:turquoise/read_data/get_students_points.dart';
 import 'package:turquoise/widgets/custom_drop_down.dart';
 import 'package:turquoise/widgets/custom_outlined_button.dart';
 
@@ -7,9 +9,22 @@ import 'package:turquoise/widgets/custom_outlined_button.dart';
 class AiDashboardScreen extends StatelessWidget {
   AiDashboardScreen({Key? key}) : super(key: key);
 
-  List<String> dropdownItemList = ["Class 1-A", "Class 1-B", "Class 1-C"];
+  List<String> dropdownItemList = ["Class 1", "Class 2", "Class 3"];
 
-  List<String> dropdownItemList1 = ["Class 1-A", "Class 1-B", "Class 1-C"];
+  List<String> dropdownItemList1 = ["Class 1", "Class 2", "Class 3"];
+
+  //list of holding good deed document ids
+  List<String> docIDs = [];
+  //get document ids
+  Future getDocId() async {
+    await FirebaseFirestore.instance
+        .collection('Turquoise').get().then(
+          (snapshot) => snapshot.docs.forEach((element) {
+            print(element.reference);
+            docIDs.add(element.reference.id);
+          }),
+        );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,20 +73,38 @@ class AiDashboardScreen extends StatelessWidget {
                                     style: theme.textTheme.headlineSmall)
                               ])),
                       SizedBox(height: 12.v),
-                      Container(
+                      /*Container(
                           width: 124.h,
                           margin: EdgeInsets.only(left: 33.h),
                           child: Text("A - 150 pts\nB - 147 pts\nC - 139 pts",
                               maxLines: 5,
                               overflow: TextOverflow.ellipsis,
                               style: theme.textTheme.headlineSmall)),
+                      */
+                      Expanded(
+                      child: FutureBuilder(
+                        future: getDocId(),
+                      builder: (context, snapshot) {
+                        return ListView.builder(
+                          itemCount: docIDs.length,
+                          itemBuilder: ((context, index) {
+                          return ListTile(
+                            title: Text(docIDs[index]),//GetStudentPoints(documentID: docIDs[index],classID: 'Class 1'),
+                          );
+                        }));
+                      })),
+                        
+                      
+                      
                       SizedBox(height: 63.v),
+                      
+                  
                       Container(
                           height: 68.v,
                           width: 221.h,
                           margin: EdgeInsets.only(left: 24.h),
                           child: Stack(alignment: Alignment.center, children: [
-                            Flexible(
+                            Container(
                                 child: CustomOutlinedButton(
                               width: 400.h,
                               text: "Cadangan",

@@ -6,10 +6,10 @@ environment:
 dependencies: 
   flutter: 
     sdk: flutter
-  firebase_core: ^0.2.5  # add dependency for Firebase Core
-  cloud_firestore: ^0.8.2  # add dependency for Cloud Firestore
+  firebase_core: ^2.23.0  # add dependency for Firebase Core
+  cloud_firestore: ^4.13.2  # add dependency for Cloud Firestore
   cached_network_image: ^3.2.1
-  flutter_svg: ^1.1.6
+  flutter_svg: ^2.0.9
   intl: ^0.18.0
 dev_dependencies: 
   flutter_test: 
