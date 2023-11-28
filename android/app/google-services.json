@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "942530582497",
+    "project_id": "turquoise-9d090",
+    "storage_bucket": "turquoise-9d090.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:942530582497:android:afe3ef2b62b30eae3d64a0",
+        "android_client_info": {
+          "package_name": "com.example.turquoise"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "942530582497-olgp9t2r5bqlapq0tqpbh8r4k4eib79v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjqdQm1m9-KsA3-T8Pw3w6jcJgLu3djwA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "942530582497-olgp9t2r5bqlapq0tqpbh8r4k4eib79v.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "942530582497-tcjdg1pmkenavidefkgsh19d4ht0ahq3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.turquoise"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:942530582497:android:6233965d9e6a16573d64a0",
+        "android_client_info": {
+          "package_name": "com.turquoise.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "942530582497-olgp9t2r5bqlapq0tqpbh8r4k4eib79v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjqdQm1m9-KsA3-T8Pw3w6jcJgLu3djwA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "942530582497-olgp9t2r5bqlapq0tqpbh8r4k4eib79v.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "942530582497-tcjdg1pmkenavidefkgsh19d4ht0ahq3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.turquoise"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

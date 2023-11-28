@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:turquoise/core/app_export.dart';
-import 'package:turquoise/read_data/get_students_points.dart';
 import 'package:turquoise/widgets/custom_drop_down.dart';
 import 'package:turquoise/widgets/custom_outlined_button.dart';
+import 'package:turquoise/read_data/get_top_students.dart';
+import 'package:turquoise/read_data/get_bottom_students.dart';
 
 // ignore_for_file: must_be_immutable
 class AiDashboardScreen extends StatelessWidget {
@@ -18,7 +19,11 @@ class AiDashboardScreen extends StatelessWidget {
   //get document ids
   Future getDocId() async {
     await FirebaseFirestore.instance
-        .collection('Turquoise').get().then(
+        .collection('Turquoise')
+        .doc('Students')
+        .collection('PersonalInfo')
+        .get()
+        .then(
           (snapshot) => snapshot.docs.forEach((element) {
             print(element.reference);
             docIDs.add(element.reference.id);
@@ -26,11 +31,16 @@ class AiDashboardScreen extends StatelessWidget {
         );
   }
 
+  Future<void> func() async {
+    await getDocId();
+  }
+
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
     return SafeArea(
         child: Scaffold(
+
             body: SizedBox(
                 width: double.maxFinite,
                 child: Column(
@@ -73,6 +83,36 @@ class AiDashboardScreen extends StatelessWidget {
                                     style: theme.textTheme.headlineSmall)
                               ])),
                       SizedBox(height: 12.v),
+                      Row(children: [
+                      Expanded(
+                          child: FutureBuilder(
+                              future: getDocId(),
+                              builder: (context, snapshot) {
+                                return ListView.builder(
+                                    itemCount: docIDs.length,
+                                    itemBuilder: ((context, index) {
+                                      return GetTopStudents(
+                                          documentID: docIDs[index],
+                                          classID: "Class 1");
+                                    }));
+                              })),
+                      SizedBox(width: 16.0),
+                      
+                      Expanded(
+                          child: FutureBuilder(
+                              future: getDocId(),
+                              builder: (context, snapshot) {
+                                return ListView.builder(
+                                    itemCount: docIDs.length,
+                                    itemBuilder: ((context, index) {
+                                      return GetBottomStudents(
+                                          documentID: docIDs[index],
+                                          classID: "Class 1");
+                                    }));
+                              })),
+
+
+                      ]),
                       /*Container(
                           width: 124.h,
                           margin: EdgeInsets.only(left: 33.h),
@@ -81,24 +121,35 @@ class AiDashboardScreen extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                               style: theme.textTheme.headlineSmall)),
                       */
+                      /*
                       Expanded(
-                      child: FutureBuilder(
-                        future: getDocId(),
-                      builder: (context, snapshot) {
-                        return ListView.builder(
-                          itemCount: docIDs.length,
-                          itemBuilder: ((context, index) {
-                          return ListTile(
-                            title: Text(docIDs[index]),//GetStudentPoints(documentID: docIDs[index],classID: 'Class 1'),
-                          );
-                        }));
-                      })),
-                        
-                      
-                      
+                          child: FutureBuilder(
+                              future: getDocId(),
+                              builder: (context, snapshot) {
+                                return ListView.builder(
+                                    itemCount: docIDs.length,
+                                    itemBuilder: ((context, index) {
+                                      return GetTopStudents(
+                                          documentID: docIDs[index],
+                                          classID: "Class 1");
+                                    }));
+                              })),
                       SizedBox(height: 63.v),
                       
-                  
+                      Expanded(
+                          child: FutureBuilder(
+                              future: getDocId(),
+                              builder: (context, snapshot) {
+                                return ListView.builder(
+                                    itemCount: docIDs.length,
+                                    itemBuilder: ((context, index) {
+                                      return GetBottomStudents(
+                                          documentID: docIDs[index],
+                                          classID: "Class 1");
+                                    }));
+                              })),
+                      SizedBox(height: 63.v),
+                      */
                       Container(
                           height: 68.v,
                           width: 221.h,
