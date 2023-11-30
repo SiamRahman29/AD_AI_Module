@@ -7,12 +7,62 @@ import 'package:turquoise/read_data/get_top_students.dart';
 import 'package:turquoise/read_data/get_bottom_students.dart';
 
 // ignore_for_file: must_be_immutable
-class AiDashboardScreen extends StatelessWidget {
+class AiDashboardScreen extends StatefulWidget {
   AiDashboardScreen({Key? key}) : super(key: key);
 
-  List<String> dropdownItemList = ["Class 1", "Class 2", "Class 3"];
+  @override
+  _AiDashboardScreenState createState() => _AiDashboardScreenState();
+}
 
-  List<String> dropdownItemList1 = ["Class 1", "Class 2", "Class 3"];
+class _AiDashboardScreenState extends State<AiDashboardScreen> {
+  
+
+  List<String> dropdownItemList = [
+    "1 Itqaan",
+    "1 Ikhlas",
+    "1 Ihsaan",
+    "1 Tawakal",
+    "2 Suhail",
+    "2 Unais",
+    "2 Saad",
+    "2 Zubair",
+    "3 Badar",
+    "3 Uhud",
+    "3 Mu'tah",
+    "3 Hunain",
+    "4 Al Banna",
+    "4 Qutb",
+    "4 Qardhawi",
+    "5 Hanbali",
+    "5 Hanafi",
+    "5 Syafie",
+    "6 Nawawi",
+    "6 Bukhari"
+  ];
+
+  List<String> dropdownItemList1 = [
+    "1 Itqaan",
+    "1 Ikhlas",
+    "1 Ihsaan",
+    "1 Tawakal",
+    "2 Suhail",
+    "2 Unais",
+    "2 Saad",
+    "2 Zubair",
+    "3 Badar",
+    "3 Uhud",
+    "3 Mu'tah",
+    "3 Hunain",
+    "4 Al Banna",
+    "4 Qutb",
+    "4 Qardhawi",
+    "5 Hanbali",
+    "5 Hanafi",
+    "5 Syafie",
+    "6 Nawawi",
+    "6 Bukhari",
+    "School Overalls"
+  ];
 
   //list of holding good deed document ids
   List<String> docIDs = [];
@@ -35,12 +85,13 @@ class AiDashboardScreen extends StatelessWidget {
     await getDocId();
   }
 
+  String className = "default";
+
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
     return SafeArea(
         child: Scaffold(
-
             body: SizedBox(
                 width: double.maxFinite,
                 child: Column(
@@ -66,9 +117,15 @@ class AiDashboardScreen extends StatelessWidget {
                                       imagePath: ImageConstant.imgLocation,
                                       height: 15.v,
                                       width: 25.h)),
-                              hintText: "Class 1-A",
+                              hintText: "Choose Class",
                               items: dropdownItemList,
-                              onChanged: (value) {})),
+                              onChanged: (value) {
+                                setState(() {
+                                  className = value;
+                                });
+                                  
+                              
+                              })),
                       SizedBox(height: 42.v),
                       Padding(
                           padding: EdgeInsets.only(left: 33.h, right: 111.h),
@@ -83,7 +140,50 @@ class AiDashboardScreen extends StatelessWidget {
                                     style: theme.textTheme.headlineSmall)
                               ])),
                       SizedBox(height: 12.v),
-                      Row(children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: FutureBuilder(
+                              future: getDocId(),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.done) {
+                                  if (!snapshot.hasError) {
+                                    return Row(
+                                      children: [
+                                        Expanded(
+                                          child: GetTopStudents(
+                                            documentID: docIDs[
+                                                0], // Change the index as needed
+                                            classID: className,
+                                          ),
+                                        ),
+                                        SizedBox(width: 16.0),
+                                        Expanded(
+                                          child: GetBottomStudents(
+                                            documentID: docIDs[
+                                                0], // Change the index as needed
+                                            classID: className,
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  } else {
+                                    return Text('Error loading data.');
+                                  }
+                                } else if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return CircularProgressIndicator();
+                                } else {
+                                  return Text('Error: ${snapshot.error}');
+                                }
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      /*Row(children: [
                       Expanded(
                           child: FutureBuilder(
                               future: getDocId(),
@@ -112,7 +212,7 @@ class AiDashboardScreen extends StatelessWidget {
                               })),
 
 
-                      ]),
+                      ]),*/
                       /*Container(
                           width: 124.h,
                           margin: EdgeInsets.only(left: 33.h),
@@ -181,7 +281,7 @@ class AiDashboardScreen extends StatelessWidget {
                                       imagePath: ImageConstant.imgLocation,
                                       height: 15.v,
                                       width: 25.h)),
-                              hintText: "Keseluhuran Kelas",
+                              hintText: "Graph Mode",
                               items: dropdownItemList1,
                               onChanged: (value) {})),
                       SizedBox(height: 31.v),

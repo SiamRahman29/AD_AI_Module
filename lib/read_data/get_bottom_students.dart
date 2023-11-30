@@ -2,39 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:turquoise/core/app_export.dart';
 
-
 class GetBottomStudents extends StatelessWidget {
   final String documentID;
   final String classID;
   GetBottomStudents({required this.documentID, required this.classID});
-/*
-  @override
-  Widget build(BuildContext context) {
-    CollectionReference students = FirebaseFirestore.instance
-        .collection('Turquoise')
-        .doc('Students')
-        .collection('PersonalInfo');
 
-    return FutureBuilder<DocumentSnapshot>(
-        future: students.doc(documentID).get(),
-        builder: ((context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.data != null && snapshot.data!.exists) {
-              // Check if data is not null and the document exists
-              Map<String, dynamic> data =
-                  snapshot.data!.data() as Map<String, dynamic>;
-              return Text("${data['Name']} - ${data['TotalPoints']}");
-            } else {
-              return Text('Document does not exist.');
-            }
-          } else if (snapshot.connectionState == ConnectionState.waiting) {
-            return Text('loading...');
-          } else {
-            return Text('Error: ${snapshot.error}');
-          }
-        }));
-  }
-*/
   @override
   Widget build(BuildContext context) {
     CollectionReference students = FirebaseFirestore.instance
@@ -43,8 +15,11 @@ class GetBottomStudents extends StatelessWidget {
         .collection('PersonalInfo');
 
     return FutureBuilder<QuerySnapshot>(
-        future:
-            students.orderBy('TotalPoints', descending: true).limit(3).get(),
+        future: students
+            .where('Class', isEqualTo: classID)
+            .orderBy('TotalPoints', descending: false)
+            .limit(3)
+            .get(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             if (!snapshot.hasError) {
@@ -57,20 +32,24 @@ class GetBottomStudents extends StatelessWidget {
                 String name = data['Name'];
                 int totalPoints = data['TotalPoints'];
                 Widget studentWidget = ListTile(
-              title: Text("$name - $totalPoints", overflow: TextOverflow.ellipsis, style: theme.textTheme.headlineSmall),
-              //subtitle: Text('Total Points: $totalPoints'),
-            );
-            topThreeWidgets.add(studentWidget);
+                  title: Text("$name - $totalPoints",
+                      overflow: TextOverflow.ellipsis,
+                      style: theme.textTheme.headlineSmall),
+                  //subtitle: Text('Total Points: $totalPoints'),
+                );
+                topThreeWidgets.add(studentWidget);
               }
               return Column(
                 children: topThreeWidgets,
               );
             } else {
-              return Text('Document does not exist.');
+              print('${snapshot.error}');
+              return Text('Error: ${snapshot.error}');
             }
           } else if (snapshot.connectionState == ConnectionState.waiting) {
-            return Text('loading...');
+            return CircularProgressIndicator();
           } else {
+            print('${snapshot.error}');
             return Text('Error: ${snapshot.error}');
           }
         });
