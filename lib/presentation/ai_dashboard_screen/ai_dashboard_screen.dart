@@ -183,73 +183,6 @@ class _AiDashboardScreenState extends State<AiDashboardScreen> {
                         ],
                       ),
 
-                      /*Row(children: [
-                      Expanded(
-                          child: FutureBuilder(
-                              future: getDocId(),
-                              builder: (context, snapshot) {
-                                return ListView.builder(
-                                    itemCount: docIDs.length,
-                                    itemBuilder: ((context, index) {
-                                      return GetTopStudents(
-                                          documentID: docIDs[index],
-                                          classID: "Class 1");
-                                    }));
-                              })),
-                      SizedBox(width: 16.0),
-                      
-                      Expanded(
-                          child: FutureBuilder(
-                              future: getDocId(),
-                              builder: (context, snapshot) {
-                                return ListView.builder(
-                                    itemCount: docIDs.length,
-                                    itemBuilder: ((context, index) {
-                                      return GetBottomStudents(
-                                          documentID: docIDs[index],
-                                          classID: "Class 1");
-                                    }));
-                              })),
-
-
-                      ]),*/
-                      /*Container(
-                          width: 124.h,
-                          margin: EdgeInsets.only(left: 33.h),
-                          child: Text("A - 150 pts\nB - 147 pts\nC - 139 pts",
-                              maxLines: 5,
-                              overflow: TextOverflow.ellipsis,
-                              style: theme.textTheme.headlineSmall)),
-                      */
-                      /*
-                      Expanded(
-                          child: FutureBuilder(
-                              future: getDocId(),
-                              builder: (context, snapshot) {
-                                return ListView.builder(
-                                    itemCount: docIDs.length,
-                                    itemBuilder: ((context, index) {
-                                      return GetTopStudents(
-                                          documentID: docIDs[index],
-                                          classID: "Class 1");
-                                    }));
-                              })),
-                      SizedBox(height: 63.v),
-                      
-                      Expanded(
-                          child: FutureBuilder(
-                              future: getDocId(),
-                              builder: (context, snapshot) {
-                                return ListView.builder(
-                                    itemCount: docIDs.length,
-                                    itemBuilder: ((context, index) {
-                                      return GetBottomStudents(
-                                          documentID: docIDs[index],
-                                          classID: "Class 1");
-                                    }));
-                              })),
-                      SizedBox(height: 63.v),
-                      */
                       Container(
                           height: 68.v,
                           width: 221.h,
@@ -287,13 +220,17 @@ class _AiDashboardScreenState extends State<AiDashboardScreen> {
                       SizedBox(height: 31.v),
                       Container(
                           width: 221.h,
-                          margin: EdgeInsets.only(left: 26.h),
+                          margin: EdgeInsets.only(left: 12.h),
                           padding: EdgeInsets.symmetric(
                               horizontal: 15.h, vertical: 2.v),
-                          decoration: AppDecoration.outlineBlack.copyWith(
-                              borderRadius: BorderRadiusStyle.roundedBorder20),
-                          child: Text("Graf",
-                              style: theme.textTheme.headlineSmall)),
+                          
+                          child: CustomOutlinedButton(
+                              width: 400.h,
+                              text: "Graf",
+                              onPressed: () {
+                                onTapView2(context);
+                              },
+                            )),
                       SizedBox(height: 28.v),
                       CustomOutlinedButton(
                           width: 91.h,
@@ -310,5 +247,8 @@ class _AiDashboardScreenState extends State<AiDashboardScreen> {
   /// Navigates to the suggestionsScreen when the action is triggered.
   onTapView(BuildContext context) {
     Navigator.pushNamed(context, AppRoutes.suggestionsScreen);
+  }
+  onTapView2(BuildContext context) {
+    Navigator.pushNamed(context, AppRoutes.chartsScreen);
   }
 }
