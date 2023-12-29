@@ -52,11 +52,12 @@ class AppRoutes {
             Colors.limeAccent
             */
         ],
-        graphClass: "SchoolOveralls",
+        
         onGraphClassChanged: (newGraphClass) {
           // Handle the updated graphClass value if needed
           print("Selected graph class: $newGraphClass");
-        }
+        },
+        graphClass: "SchoolOveralls",
       );
     },
   };

@@ -2,7 +2,52 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class ChartsScreen extends StatelessWidget {
+class ChartsScreen extends StatefulWidget {
+  final List<String> documentIds;
+  final List<Color> lineColors;
+ final Function(String) onGraphClassChanged;
+ String graphClass;
+  ChartsScreen({
+    required this.documentIds,
+    required this.lineColors,
+    required this.onGraphClassChanged,
+    required this.graphClass
+  });
+
+  
+
+  @override
+  _ChartsScreenState createState() => _ChartsScreenState();
+}
+
+
+
+class _ChartsScreenState extends State<ChartsScreen> {
+  
+final List<String> dropdownItemList1 = [
+    "1 Itqaan",
+    "1 Ikhlas",
+    "1 Ihsaan",
+    "1 Tawakal",
+    "2 Suhail",
+    "2 Unais",
+    "2 Saad",
+    "2 Zubair",
+    "3 Badar",
+    "3 Uhud",
+    "3 Mu'tah",
+    "3 Hunain",
+    "4 Al Banna",
+    "4 Qutb",
+    "4 Qardhawi",
+    "5 Hanbali",
+    "5 Hanafi",
+    "5 Syafie",
+    "6 Nawawi",
+    "6 Bukhari",
+    "SchoolOveralls"
+  ];
+  /*
   final List<String> documentIds;
   final List<Color> lineColors;
   final String graphClass;
@@ -38,9 +83,17 @@ class ChartsScreen extends StatelessWidget {
     "SchoolOveralls"
   ];
 
+*/
 
+  /*
   @override
-  
+  void initState() {
+    super.initState();
+    // Set an initial value for graphClass
+    graphClass = "SchoolOveralls";
+  }
+  */
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -49,7 +102,7 @@ class ChartsScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: DropdownButton<String>(
-              value: graphClass,
+              value: widget.graphClass,
               items: dropdownItemList1
                   .map((String value) => DropdownMenuItem<String>(
                         value: value,
@@ -58,7 +111,10 @@ class ChartsScreen extends StatelessWidget {
                   .toList(),
               onChanged: (String? newValue) {
                 if (newValue != null) {
-                  onGraphClassChanged(newValue);
+                  setState(() {
+                      widget.graphClass = newValue;
+                      widget.onGraphClassChanged(newValue);
+                  });
                 }
               },
             ),
@@ -109,7 +165,7 @@ class ChartsScreen extends StatelessWidget {
                         tooltipBgColor: Colors.blueAccent,
                         getTooltipItems: (List<LineBarSpot> touchedBarSpots) {
                           return touchedBarSpots.map((barSpot) {
-                            final documentId = documentIds[barSpot.barIndex];
+                            final documentId = widget.documentIds[barSpot.barIndex];
                             final value = barSpot.y;
 
                             return LineTooltipItem(
@@ -135,9 +191,9 @@ class ChartsScreen extends StatelessWidget {
   Future<List<LineChartBarData>> fetchData() async {
     List<LineChartBarData> chartsData = [];
 
-    for (int i = 0; i < documentIds.length; i++) {
-      String documentId = documentIds[i];
-      Color lineColor = lineColors[i];
+    for (int i = 0; i < widget.documentIds.length; i++) {
+      String documentId =widget.documentIds[i];
+      Color lineColor = widget.lineColors[i];
 
       List<FlSpot> spots = await getDataFromFirestore(documentId);
       LineChartBarData chartData = LineChartBarData(
@@ -158,7 +214,7 @@ class ChartsScreen extends StatelessWidget {
     CollectionReference classData = FirebaseFirestore.instance
         .collection('Turquoise') // Replace with your collection name
         .doc("ForCharts")
-        .collection("SchoolOveralls");
+        .collection(widget.graphClass);
     DocumentSnapshot<Map<String, dynamic>> document = await classData
         .doc(documentId)
         .get() as DocumentSnapshot<Map<String, dynamic>>;
