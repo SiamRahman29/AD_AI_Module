@@ -15,8 +15,6 @@ class AiDashboardScreen extends StatefulWidget {
 }
 
 class _AiDashboardScreenState extends State<AiDashboardScreen> {
-  
-
   List<String> dropdownItemList = [
     "1 Itqaan",
     "1 Ikhlas",
@@ -61,7 +59,7 @@ class _AiDashboardScreenState extends State<AiDashboardScreen> {
     "5 Syafie",
     "6 Nawawi",
     "6 Bukhari",
-    "School Overalls"
+    "SchoolOveralls"
   ];
 
   //list of holding good deed document ids
@@ -85,8 +83,8 @@ class _AiDashboardScreenState extends State<AiDashboardScreen> {
     await getDocId();
   }
 
-  String className = "default";
-
+  String className = "1 Itqaan";
+  String graphClassName = "SchoolOveralls";
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
@@ -117,14 +115,12 @@ class _AiDashboardScreenState extends State<AiDashboardScreen> {
                                       imagePath: ImageConstant.imgLocation,
                                       height: 15.v,
                                       width: 25.h)),
-                              hintText: "Choose Class",
+                              hintText: "1 Itqaan",
                               items: dropdownItemList,
                               onChanged: (value) {
                                 setState(() {
                                   className = value;
                                 });
-                                  
-                              
                               })),
                       SizedBox(height: 42.v),
                       Padding(
@@ -182,7 +178,6 @@ class _AiDashboardScreenState extends State<AiDashboardScreen> {
                           ),
                         ],
                       ),
-
                       Container(
                           height: 68.v,
                           width: 221.h,
@@ -216,21 +211,26 @@ class _AiDashboardScreenState extends State<AiDashboardScreen> {
                                       width: 25.h)),
                               hintText: "Graph Mode",
                               items: dropdownItemList1,
-                              onChanged: (value) {})),
+                              onChanged: (value) {
+                                print("Selected value: $value");
+                                setState(() {
+                                  graphClassName = value;
+                                });
+                              })),
                       SizedBox(height: 31.v),
                       Container(
                           width: 221.h,
                           margin: EdgeInsets.only(left: 12.h),
                           padding: EdgeInsets.symmetric(
                               horizontal: 15.h, vertical: 2.v),
-                          
                           child: CustomOutlinedButton(
-                              width: 400.h,
-                              text: "Graf",
-                              onPressed: () {
-                                onTapView2(context);
-                              },
-                            )),
+                            width: 400.h,
+                            text: "Graf",
+                            onPressed: () {
+                              print("GraphClassName before onTapView2: $graphClassName");
+                              onTapView2(context, graphClassName);
+                            },
+                          )),
                       SizedBox(height: 28.v),
                       CustomOutlinedButton(
                           width: 91.h,
@@ -248,7 +248,10 @@ class _AiDashboardScreenState extends State<AiDashboardScreen> {
   onTapView(BuildContext context) {
     Navigator.pushNamed(context, AppRoutes.suggestionsScreen);
   }
-  onTapView2(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.chartsScreen);
+
+  onTapView2(BuildContext context, String graphClassName) {
+    print("GraphClassName before onTapView2: $graphClassName");
+    Navigator.pushNamed(context, AppRoutes.chartsScreen,
+        arguments: Arguments(graphClassName: graphClassName));
   }
 }
