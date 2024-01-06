@@ -198,25 +198,6 @@ class _AiDashboardScreenState extends State<AiDashboardScreen> {
                           child: Text("Kemajuan",
                               style: theme.textTheme.headlineSmall)),
                       SizedBox(height: 21.v),
-                      Padding(
-                          padding: EdgeInsets.only(left: 26.h),
-                          child: CustomDropDown(
-                              width: 221.h,
-                              icon: Container(
-                                  margin: EdgeInsets.fromLTRB(
-                                      15.h, 12.v, 9.h, 12.v),
-                                  child: CustomImageView(
-                                      imagePath: ImageConstant.imgLocation,
-                                      height: 15.v,
-                                      width: 25.h)),
-                              hintText: "Graph Mode",
-                              items: dropdownItemList1,
-                              onChanged: (value) {
-                                print("Selected value: $value");
-                                setState(() {
-                                  graphClassName = value;
-                                });
-                              })),
                       SizedBox(height: 31.v),
                       Container(
                           width: 221.h,
@@ -227,7 +208,8 @@ class _AiDashboardScreenState extends State<AiDashboardScreen> {
                             width: 400.h,
                             text: "Graf",
                             onPressed: () {
-                              print("GraphClassName before onTapView2: $graphClassName");
+                              print(
+                                  "GraphClassName before onTapView2: $graphClassName");
                               onTapView2(context, graphClassName);
                             },
                           )),
@@ -235,18 +217,18 @@ class _AiDashboardScreenState extends State<AiDashboardScreen> {
                       CustomOutlinedButton(
                           width: 91.h,
                           text: "Back",
+                          onPressed: () {
+                            //Navigator.pop(context);
+                          },
                           margin: EdgeInsets.only(left: 26.h)),
                       SizedBox(height: 48.v),
-                      CustomImageView(
-                          imagePath: ImageConstant.imgRectangle8,
-                          height: 39.v,
-                          width: 430.h)
                     ]))));
   }
 
   /// Navigates to the suggestionsScreen when the action is triggered.
   onTapView(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.suggestionsScreen);
+    Navigator.pushNamed(context, AppRoutes.suggestionsScreen,
+        arguments: className);
   }
 
   onTapView2(BuildContext context, String graphClassName) {

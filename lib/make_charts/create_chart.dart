@@ -5,27 +5,21 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class ChartsScreen extends StatefulWidget {
   final List<String> documentIds;
   final List<Color> lineColors;
- final Function(String) onGraphClassChanged;
- String graphClass;
-  ChartsScreen({
-    required this.documentIds,
-    required this.lineColors,
-    required this.onGraphClassChanged,
-    required this.graphClass
-  });
-
-  
+  final Function(String) onGraphClassChanged;
+  String graphClass;
+  ChartsScreen(
+      {required this.documentIds,
+      required this.lineColors,
+      required this.onGraphClassChanged,
+      required this.graphClass});
 
   @override
   _ChartsScreenState createState() => _ChartsScreenState();
 }
 
-
-
 class _ChartsScreenState extends State<ChartsScreen> {
-  
-final List<String> dropdownItemList1 = [
-    "1 Itqaan",
+  final List<String> dropdownItemList1 = [
+    "1Itqaan",
     "1 Ikhlas",
     "1 Ihsaan",
     "1 Tawakal",
@@ -112,8 +106,8 @@ final List<String> dropdownItemList1 = [
               onChanged: (String? newValue) {
                 if (newValue != null) {
                   setState(() {
-                      widget.graphClass = newValue;
-                      widget.onGraphClassChanged(newValue);
+                    widget.graphClass = newValue;
+                    widget.onGraphClassChanged(newValue);
                   });
                 }
               },
@@ -165,7 +159,8 @@ final List<String> dropdownItemList1 = [
                         tooltipBgColor: Colors.blueAccent,
                         getTooltipItems: (List<LineBarSpot> touchedBarSpots) {
                           return touchedBarSpots.map((barSpot) {
-                            final documentId = widget.documentIds[barSpot.barIndex];
+                            final documentId =
+                                widget.documentIds[barSpot.barIndex];
                             final value = barSpot.y;
 
                             return LineTooltipItem(
@@ -192,7 +187,7 @@ final List<String> dropdownItemList1 = [
     List<LineChartBarData> chartsData = [];
 
     for (int i = 0; i < widget.documentIds.length; i++) {
-      String documentId =widget.documentIds[i];
+      String documentId = widget.documentIds[i];
       Color lineColor = widget.lineColors[i];
 
       List<FlSpot> spots = await getDataFromFirestore(documentId);
@@ -211,6 +206,7 @@ final List<String> dropdownItemList1 = [
 
   Future<List<FlSpot>> getDataFromFirestore(String documentId) async {
     // Replace with your Firestore query logic
+    print(widget.graphClass);
     CollectionReference classData = FirebaseFirestore.instance
         .collection('Turquoise') // Replace with your collection name
         .doc("ForCharts")
